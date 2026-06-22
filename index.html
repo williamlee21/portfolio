@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William Lee — Frontend Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F7F6F3;
+    --ink:#14171A;
+    --ink-soft:#4B5258;
+    --accent:#3A6EA5;
+    --rule:#D9D6CE;
+    --card:#FFFFFF;
+    --header-bg:rgba(247,246,243,0.92);
+  }
+  :root[data-theme="dark"]{
+    --paper:#15171A;
+    --ink:#ECEAE4;
+    --ink-soft:#A6ACB3;
+    --accent:#7BA7D9;
+    --rule:#2D3034;
+    --card:#1C1F23;
+    --header-bg:rgba(21,23,26,0.92);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    transition:background-color .25s ease, color .25s ease;
+  }
+  a{color:inherit;}
+  .wrap{
+    max-width:880px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+  /* ---- nav ---- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:var(--header-bg);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--rule);
+    transition:background-color .25s ease, border-color .25s ease;
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    max-width:880px; margin:0 auto; padding:18px 28px;
+  }
+  .nav-mark{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; letter-spacing:0.02em;
+    color:var(--ink);
+  }
+  .nav-links{display:flex; gap:28px; font-size:14px; align-items:center;}
+  .nav-links a{text-decoration:none; color:var(--ink-soft); transition:color .15s;}
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--accent);}
+  .theme-toggle{
+    background:none;
+    border:1px solid var(--rule);
+    border-radius:999px;
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    color:var(--ink);
+    transition:border-color .15s, color .15s, background-color .15s;
+    padding:0;
+  }
+  .theme-toggle:hover, .theme-toggle:focus-visible{border-color:var(--accent); color:var(--accent);}
+  .theme-toggle svg{width:16px; height:16px; display:block;}
+  .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:block;}
+
+  /* ---- hero ---- */
+  .hero{
+    padding:96px 0 72px;
+    border-bottom:1px solid var(--rule);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; color:var(--accent);
+    margin:0 0 18px;
+    letter-spacing:0.01em;
+  }
+  .eyebrow::before{content:"// ";}
+  h1{
+    font-family:'Newsreader', serif;
+    font-weight:500;
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.08;
+    margin:0 0 22px;
+    letter-spacing:-0.01em;
+  }
+  h1 em{font-style:italic; color:var(--accent); font-weight:500;}
+  .hero p.lede{
+    font-size:18px; line-height:1.65;
+    color:var(--ink-soft);
+    max-width:600px;
+    margin:0 0 32px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px;
+    border-radius:2px;
+    font-size:14px; font-weight:500;
+    text-decoration:none;
+    transition:transform .15s, box-shadow .15s;
+  }
+  .btn-primary{
+    background:var(--ink); color:var(--paper);
+  }
+  .btn-primary:hover, .btn-primary:focus-visible{transform:translateY(-1px);}
+  .btn-ghost{
+    border:1px solid var(--ink);
+    color:var(--ink);
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible{background:var(--ink); color:var(--paper);}
+
+  /* ---- section shared ---- */
+  section{padding:64px 0;}
+  section.bordered{border-bottom:1px solid var(--rule);}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:36px; flex-wrap:wrap; gap:8px;
+  }
+  .section-head h2{
+    font-family:'Newsreader', serif;
+    font-size:28px; font-weight:500; margin:0;
+  }
+  .section-head .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--ink-soft);
+  }
+
+  /* ---- experience ---- */
+  .role{
+    display:grid;
+    grid-template-columns:160px 1fr;
+    gap:24px;
+    padding:28px 0;
+    border-top:1px solid var(--rule);
+  }
+  .role:first-of-type{border-top:none;}
+  .role-meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; color:var(--ink-soft);
+    line-height:1.6;
+  }
+  .role h3{margin:0 0 4px; font-size:18px; font-weight:600;}
+  .role .company{color:var(--accent); font-weight:600;}
+  .role p{margin:10px 0 0; color:var(--ink-soft); font-size:15px; line-height:1.65;}
+
+  /* ---- case studies ---- */
+  .cases{display:grid; gap:20px;}
+  .case{
+    background:var(--card);
+    border:1px solid var(--rule);
+    border-radius:3px;
+    padding:28px 30px;
+  }
+  .case-top{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:10px; gap:12px; flex-wrap:wrap;
+  }
+  .case h3{margin:0; font-size:19px; font-weight:600;}
+  .case .stat{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; color:var(--accent); font-weight:500;
+    white-space:nowrap;
+  }
+  .case-row{display:flex; gap:22px; margin-top:14px; flex-wrap:wrap;}
+  .case-col{flex:1; min-width:200px;}
+  .case-col .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--ink-soft); margin-bottom:6px; display:block;
+  }
+  .case-col p{margin:0; font-size:14.5px; line-height:1.6; color:var(--ink);}
+  .case-tech{
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--rule);
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--ink-soft);
+  }
+
+  /* ---- skills ---- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:24px;
+  }
+  .skill-group .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--accent); margin-bottom:10px; display:block;
+  }
+  .skill-group .items{font-size:14.5px; line-height:1.8; color:var(--ink-soft);}
+
+  /* ---- contact ---- */
+  .contact-row{
+    display:flex; gap:32px; flex-wrap:wrap; align-items:baseline;
+    margin-top:8px;
+  }
+  .contact-row a{
+    text-decoration:none; font-size:15px;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:2px;
+    transition:border-color .15s, color .15s;
+  }
+  .contact-row a:hover, .contact-row a:focus-visible{color:var(--accent); border-color:var(--accent);}
+
+  footer{
+    padding:32px 0 48px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; color:var(--ink-soft);
+  }
+
+  @media (max-width:600px){
+    .role{grid-template-columns:1fr; gap:6px;}
+    .hero{padding:64px 0 48px;}
+  }
+
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <span class="nav-mark">william lee</span>
+    <div class="nav-links">
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" type="button">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">frontend engineer, brooklyn ny</p>
+    <h1>I build the systems<br>behind the <em>screen.</em></h1>
+    <p class="lede">Four years shipping production code at a fintech company — from rebuilding a legacy platform to optimizing the data pipelines that finance and ops teams run on. Comfortable across the stack, from a React component to a MySQL query plan.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="resume.pdf" download>Download résumé</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
+    </div>
+  </section>
+
+  <section class="bordered" id="experience">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="tag">2019 — present</span>
+    </div>
+
+    <div class="role">
+      <div class="role-meta">Dec 2021 —<br>Present</div>
+      <div>
+        <h3>Frontend Web Developer<br><span class="company">Firstrade Securities</span></h3>
+        <p>Led the migration off a legacy PHP monolith to Next.js + Strapi, improving load performance and SEO. Built internal tooling (Retool, MySQL pipelines) used company-wide, and cut onboarding friction for a 20%+ lift in application completions.</p>
+      </div>
+    </div>
+
+    <div class="role">
+      <div class="role-meta">Jan 2019 —<br>Feb 2020</div>
+      <div>
+        <h3>Frontend Developer<br><span class="company">Dearest</span></h3>
+        <p>Built internal React + NoSQL tools for non-technical stakeholders and refactored legacy components for performance.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bordered" id="skills">
+    <div class="section-head">
+      <h2>Skills</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <span class="label">languages &amp; backend</span>
+        <div class="items">JavaScript · TypeScript<br>Node.js · PHP<br>SQL (MySQL)</div>
+      </div>
+      <div class="skill-group">
+        <span class="label">data &amp; messaging</span>
+        <div class="items">MySQL · MongoDB<br>KafkaJS · AWS S3<br>REST · GraphQL</div>
+      </div>
+      <div class="skill-group">
+        <span class="label">frontend</span>
+        <div class="items">React.js · Next.js<br>Tailwind CSS<br>HTML / CSS</div>
+      </div>
+      <div class="skill-group">
+        <span class="label">tools</span>
+        <div class="items">Git · Jira<br>Retool · Strapi<br>Figma</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+    <p class="lede" style="margin-bottom:0;">Brooklyn, NY — open to frontend engineering and full-stack roles.</p>
+    <div class="contact-row">
+      <a href="mailto:williamlee021@gmail.com">williamlee021@gmail.com</a>
+      <a href="https://linkedin.com/in/wiliamlee21" target="_blank" rel="noopener">linkedin.com/in/wiliamlee21</a>
+      <a href="https://github.com/williamlee21" target="_blank" rel="noopener">github.com/williamlee21</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 William Lee — built with care, debugged with water.</div>
+</footer>
+
+<script>
+  (function(){
+    const root = document.documentElement;
+    const toggle = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored || (prefersDark ? 'dark' : 'light');
+    root.setAttribute('data-theme', initial);
+
+    toggle.addEventListener('click', function(){
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  })();
+</script>
+</body>
+</html>
